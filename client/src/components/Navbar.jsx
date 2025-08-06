@@ -52,16 +52,16 @@ const Navbar = ({ onNavigate }) => {
   
   return (
     <header className={`w-full px-4 py-2 shadow-2xl ${isLoggedIn
-        ? 'bg-gradient-to-r from-[#030d46] to-[#06eaea] text-white'
+        ? 'bg-[linear-gradient(to_right,_#030d46_80%,_#06eaea_100%)] text-white'
         : 'bg-white text-black'
       }`}>
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
         <Link to="/">
-          <div className="flex gap-2 items-center">
+          <div className="flex items-center">
             <img className="w-14 h-14" src={Logo} alt="logo" />
-            <h1 className={`text-2xl font-bold ${isLoggedIn ? 'text-blue-300' : 'text-blue-700'}`}>EXCEL</h1>
-            <h1 className="text-2xl font-bold text-[#06eaea]">ANALYTICS</h1>
+            <h1 className={`text-2xl font-bold ${isLoggedIn ? 'text-blue-300' : 'text-blue-700'}`}>EXCEL ANA</h1>
+            <h1 className="text-2xl font-bold text-[#06eaea]">LYSER PRO</h1>
           </div>
         </Link>
 

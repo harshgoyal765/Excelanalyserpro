@@ -9,7 +9,7 @@ export default function Footer() {
     <footer className="bg-[#030d46] text-white pt-10 pb-6 px-14">
       <div className="container mx-auto flex flex-col md:flex-row justify-between gap-8 border-b border-blue-700 pb-8">
         <div>
-          <h1 className="text-2xl font-bold">EXCEL ANALYTICS</h1>
+          <h1 className="text-2xl font-bold">EXCEL ANALYSER PRO</h1>
           <p className="text-sm text-blue-300 mt-1">Transforming Excel Data Into Actionable Insights</p>
         </div>
 
@@ -44,7 +44,7 @@ export default function Footer() {
           <a href="#" className="border p-2 rounded-full"><FaLinkedinIn className="hover:text-blue-300" /></a>
           <a href="#" className="border p-2 rounded-full">< FaYoutube  className="hover:text-blue-300" /></a>
         </div>
-        <p className="text-sm lg:text-lg text-blue-300">© {new Date().getFullYear()} Excel Analytics. All rights reserved.</p>
+        <p className="text-sm lg:text-lg text-blue-300">© {new Date().getFullYear()} Excel Analyser Pro. All rights reserved.</p>
       </div>
     </footer>
   );

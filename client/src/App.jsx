@@ -38,7 +38,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/contact" element={<ContactUs />} />
-        <Route path="/signin" element={<SignInForm />} />
+        <Route path="/sign-in" element={<SignInForm />} />
         <Route path="/ForgetPwd" element={<ForgetPassword />} />
         <Route path="/sign-up" element={<SignupForm />} />
         <Route path="/upload-excel" element={<UploadExcel/>}/>
