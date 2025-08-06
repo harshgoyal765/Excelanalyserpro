@@ -22,7 +22,10 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
   .catch(err => console.error('MongoDB connection error:', err));
     
     
-      
+       app.use('/', (req, res) => {
+       res.send('Welcome to the Excel Analyzer Pro API');
+       })
+     
   app.use('/api/auth', authRoutes);
   app.use('/api/uploads', uploadRoutes);
   app.use('/api/analyses', analysisRoutes);
@@ -30,9 +33,7 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
   app.use('/api/contact', contactRoutes);
   app.use('/api/ai', aiRoutes);
   app.use('/api/users', userRoutes);
-     app.use('/', (req, res) => {
-       res.send('Welcome to the Excel Analyzer Pro API');
-     })
+    
   
   app.listen(port, () => {
     console.log(`Server running on port ${port}`);
