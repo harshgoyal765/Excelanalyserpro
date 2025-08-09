@@ -21,9 +21,6 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
     .then(() => console.log('Connected to MongoDB Atlas'))
   .catch(err => console.error('MongoDB connection error:', err));
     
-    
-      
-     
   app.use('/api/auth', authRoutes);
   app.use('/api/uploads', uploadRoutes);
   app.use('/api/analyses', analysisRoutes);

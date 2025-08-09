@@ -2,6 +2,7 @@ const XLSX = require('xlsx');
 const UploadHistory = require('../models/UploadHistory');
 
 exports.uploadFile = async (req, res) => {
+  console.log("📥 File upload endpoint hit");
   try {
     const workbook = XLSX.read(req.file.buffer, { type: 'buffer' });
     const sheet = workbook.SheetNames[0];
@@ -24,11 +25,12 @@ exports.uploadFile = async (req, res) => {
     });
 
     await upload.save();
-
+    console.log("✅ Upload saved with ID:", upload._id);
     res.status(201).json({
       message: 'Upload successful',
       uploadId: upload._id
     });
+   
   } catch (err) {
     res.status(500).json({ message: 'Upload error', error: err.message });
   }

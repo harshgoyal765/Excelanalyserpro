@@ -78,7 +78,7 @@ const handleAnalyze = async () => {
 
   try {
     
-
+ 
     const response = await uploadFile(formData);
 
     const result = response.data;
@@ -93,7 +93,23 @@ const handleAnalyze = async () => {
     alert('Error: ' + error.message);
   }
 };
-
+// try {
+//     const { data, status } = await uploadFile(formData); // only one call
+//   console.log(data.uploadId);
+//     if (status >= 200 && status < 300) {
+//       if (data?.uploadId) {
+//         alert('Upload and analysis successful.');
+//         navigate(`/charts/${data.uploadId}`);
+//       } else {
+//         alert('Upload failed: No uploadId returned.');
+//       }
+//     } else {
+//       alert('Upload failed: ' + data?.message);
+//     }
+//   } catch (error) {
+//     alert('Error: ' + error.message);
+//   }
+//};
 
   useEffect(() => {
     const userInterval = setInterval(() => {

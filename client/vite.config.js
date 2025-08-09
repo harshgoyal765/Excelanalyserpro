@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://excel-analytics-backend-y6sg.onrender.com", 
+        target: "https://excelanalyserproback.onrender.com", 
         changeOrigin: true,
         secure: false,
       },

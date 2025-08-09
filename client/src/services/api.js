@@ -1,9 +1,11 @@
+
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://excel-analytics-backend-y6sg.onrender.com/api",
+  baseURL: "https://excelanalyserproback.onrender.com/api",
 });
 
+// Request interceptor
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("authToken");
@@ -21,6 +23,7 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
+// Auth APIs
 export const loginUser = (credentials) => api.post("/auth/login", credentials);
 
 export const registerUser = (data) => api.post("/auth/register", data);
@@ -33,20 +36,15 @@ export const verifyOtp = (email, otp) =>
 export const resetPassword = (email, newPassword) =>
   api.post("/auth/reset-password", { email, newPassword });
 
+// Admin & User APIs
 export const fetchDashboardStats = () =>
-  api.get("/admin/stats", {
-    requiresAuth: true,
-  });
+  api.get("/admin/stats", { requiresAuth: true });
 
 export const fetchUploadInsights = () =>
-  api.get("/admin/uploads/insights", {
-    requiresAuth: true,
-  });
+  api.get("/admin/uploads/insights", { requiresAuth: true });
 
 export const fetchUploadHistory = () =>
-  api.get("/admin/uploads", {
-    requiresAuth: true,
-  });
+  api.get("/admin/uploads", { requiresAuth: true });
 
 export const fetchChartData = (type) =>
   api.get(`/admin/uploads/graph/${type}`, {
@@ -54,10 +52,11 @@ export const fetchChartData = (type) =>
     headers: { "Cache-Control": "no-cache" },
   });
 
+// Contact API
 export const sendContactMessage = async (formData) => {
   try {
     const res = await axios.post(
-      "https://excel-analytics-backend-y6sg.onrender.com/api/contact",
+      "https://excelanalyserproback.onrender.com/api/contact",
       formData,
       {
         headers: {
@@ -72,56 +71,43 @@ export const sendContactMessage = async (formData) => {
 };
 
 export const fetchContactMessages = () =>
-  api.get("/admin/contact", {
-    requiresAuth: true,
-  });
+  api.get("/admin/contact", { requiresAuth: true });
 
+// Upload APIs
 export const getChartDataById = (uploadId) =>
-  api.get(`/uploads/${uploadId}/chart-data`, {
-    requiresAuth: true,
-  });
+  api.get(`/uploads/${uploadId}/chart-data`, { requiresAuth: true });
 
 export const getUploadHistory = () =>
-  api.get("/uploads/user/uploads", {
-    requiresAuth: true,
-  });
-export const deleteUploadById = (id) =>
-  api.delete(`/uploads/${id}`, {
-    requiresAuth: true,
-  });
+  api.get("/uploads/user/uploads", { requiresAuth: true });
 
+export const deleteUploadById = (id) =>
+  api.delete(`/uploads/${id}`, { requiresAuth: true });
+
+// User APIs
 export const fetchAllUsers = () =>
-  api.get("/admin/users", {
-    requiresAuth: true,
-  });
+  api.get("/admin/users", { requiresAuth: true });
 
 export const getUserDashboardData = () =>
-  api.get("uploads/dashboard/user", {
-    requiresAuth: true,
-  });
-export const getChartsUploadHistory = () =>
-  api.get("uploads/charts-data", {
-    requiresAuth: true,
-  });
-export const getUserProfile = (id) =>
-  api.get(`users/${id}`, {
-    requiresAuth: true,
-  });
-export const putUserProfile = (id, formData) =>
-  api.put(`users/update/${id}`, formData, {
-    requiresAuth: true,
-  });
+  api.get("/uploads/dashboard/user", { requiresAuth: true });
 
+export const getChartsUploadHistory = () =>
+  api.get("/uploads/charts-data", { requiresAuth: true });
+
+export const getUserProfile = (id) =>
+  api.get(`/users/${id}`, { requiresAuth: true });
+
+export const putUserProfile = (id, formData) =>
+  api.put(`/users/update/${id}`, formData, { requiresAuth: true });
+
+// AI API
 export const generateInsights = (tableData) =>
   api.post(
     "/ai/generate-insights",
     { tableData },
-    {
-      requiresAuth: true,
-      contentType: "application/json",
-    }
+    { requiresAuth: true, contentType: "application/json" }
   );
 
+// File Upload API
 export const uploadFile = (formData) =>
   api.post("/uploads", formData, {
     requiresAuth: true,
