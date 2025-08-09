@@ -40,38 +40,6 @@ const UploadExcel = ({ darkMode }) => {
   const [excelData, setExcelData] = useState([]);
 
 
-//   if (!selectedFile) {
-//     alert("Please upload a file first.");
-//     return;
-//   }
-
-//   const formData = new FormData();
-//   formData.append('file', selectedFile);
-
-//   try {
-//     const token = localStorage.getItem('token');
-
-//     const response = await fetch('/api/uploads', {
-//       method: 'POST',
-//       headers: {
-//         Authorization: `Bearer ${token}`
-//         // ❌ Don't set Content-Type manually, browser will handle it
-//       },
-//       body: formData
-//     });
-
-//     const result = await response.json();
-
-//     if (response.ok) {
-//       alert('Upload and analysis successful.');
-//       console.log('Upload ID:', result.uploadId);
-//     } else {
-//       alert('Upload failed: ' + result.message);
-//     }
-//   } catch (error) {
-//     alert('Error: ' + error.message);
-//   }
-// };
 
   const handleExcelUpload = (e) => {
   const file = e.target.files[0];
@@ -151,15 +119,15 @@ const handleAnalyze = async () => {
   }, [userData, barDataValues, sourceData]);
 
   return (
-    <div className={`flex flex-col min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gradient-to-r from-[#aeffff] to-cyan text-gray-900'}`}>
+    <div className={`flex flex-col min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gradient-to-b from-[#e5eeee] to-cyan text-gray-900'}`}>
  
 
       <div className="my-20 w-full flex flex-col justify-around  gap-10 px-10 items-center">
   
-        <div className="w-full md:w-2/3  text-center p-10 border-2 border-dashed border-blue-400 bg-white dark:bg-gray-800 rounded-md md:pt-16 md:pb-16 shadow-md flex flex-col items-center gap-4">
+        <div className="w-full md:w-2/3  text-center p-10 border-2 border-dashed border-blue-900 bg-white dark:bg-blue-800/25 rounded-md md:pt-16 md:pb-16 shadow-md flex flex-col items-center gap-4">
           <IoCloudUploadOutline className="w-20 h-20 text-blue-700" />
           <h2 className="text-2xl font-bold mb-2 text-blue-900 ">Upload Excel File</h2>
-          <p className="text-sm mb-4 text-gray-500 dark:text-gray-300">Upload your Excel file (.xls or .xlsx) to analyze and visualize your data</p>
+          <p className="text-m mb-4 text-black dark:text-black">Upload your Excel file (.xls or .xlsx) to analyze and visualize your data</p>
           <label htmlFor="excelUpload" className="cursor-pointer inline-flex items-center gap-2 px-6 py-3 bg-blue-500 text-white font-semibold rounded shadow hover:bg-blue-600">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1M12 12v6m0 0l-3-3m3 3l3-3M12 4v8"></path></svg>
             Upload Excel File
@@ -168,8 +136,8 @@ const handleAnalyze = async () => {
         </div>
 
       
-        <div className="w-full bg-white dark:bg-gray-800 p-6 rounded-lg shadow overflow-auto max-h-[400px]">
-          <h3 className="text-lg font-semibold mb-4">Preview</h3>
+        <div className="w-full bg-white dark:bg-gray-700 p-6 rounded-lg shadow overflow-auto max-h-[400px]">
+          <h3 className="text-lg font-semibold mb-4 text-white">Preview</h3>
           {excelData.length > 0 ? (
             <table className="min-w-full text-sm">
               <thead>
@@ -190,10 +158,10 @@ const handleAnalyze = async () => {
               </tbody>
             </table>
           ) : (
-            <p className="text-gray-500">No file uploaded yet.</p>
+            <p className="text-black">No file uploaded yet.</p>
           )}
         </div>
-      <div className='flex items-center gap-2 bg-blue-600 py-2 px-3 rounded text-white font-semibold hover:bg-blue-700 transition-colors'>
+      <div className='flex items-center gap-2 bg-blue-600 py-2 px-3 rounded text-white font-semibold hover:bg-blue-900 transition-colors'>
        <TbAnalyzeFilled  />
       <button onClick={handleAnalyze} >Analyze</button>
 
