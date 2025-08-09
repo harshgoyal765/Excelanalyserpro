@@ -22,9 +22,7 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
   .catch(err => console.error('MongoDB connection error:', err));
     
     
-       app.use('/', (req, res) => {
-       res.send('Welcome to the Excel Analyzer Pro API');
-       })
+      
      
   app.use('/api/auth', authRoutes);
   app.use('/api/uploads', uploadRoutes);
