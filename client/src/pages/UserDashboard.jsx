@@ -41,7 +41,9 @@ const UserDashboard = () => {
     { label: 'Pending Files', value: dashboard.pending, color: 'text-yellow-600', icon: <FiClock className="text-yellow-400 text-3xl" />,bg: 'bg-gradient-to-r  from-cyan to-blue-600', },
     { label: 'Failed Files', value: dashboard.failed, color: 'text-yellow-600', icon: <FiXCircle className="text-red-600 text-3xl" />,bg: 'bg-gradient-to-r from-red-600 to-black', },
   ].map((item, idx) => (
-    <div key={idx} className={` p-5 shadow-md text-white ${item.bg} transition transform hover:scale-[1.02]`}>
+    <div key={idx} className={`p-6 rounded-2xl shadow-lg border border-white/20 backdrop-blur-lg 
+bg-white/10 text-white ${item.bg} 
+transition-transform duration-300 ease-out hover:scale-105 hover:shadow-2xl`}>
       <h4 className="text-md font-semibold  mb-2">{item.label}</h4>
       <div className="flex items-center justify-between">
         <div className="text-3xl font-bold ">{item.value}</div>

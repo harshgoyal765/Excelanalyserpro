@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
-const nodemailer = require("nodemailer");
+const nodemailer = require('nodemailer');
 
 exports.register = async (req, res) => {
   const {
@@ -162,24 +162,34 @@ exports.sendOtp = async (req, res) => {
   otpStore[email] = { otp, expiresAt: Date.now() + 5 * 60 * 1000 };
 
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: 'harshgoyal5623@gmail.com',
-      pass: 'aocl tcgb rfju rpuw', 
+    // service: 'gmail',
+    // auth: {
+    //   user: 'mayur.ghule05@gmail.com',
+    //   pass: 'aocl tcgb rfju rpuw', 
+
+       service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER,  // from .env
+    pass: process.env.EMAIL_PASS,  // from .env
     },
   });
 
   const mailOptions = {
-    from: 'harshgoyal5623@gmail.com',
-    to: email,
-    subject: 'Password Reset OTP',
-    text: `Your OTP is ${otp}. It will expire in 5 minutes.`,
+    // from: 'mayur.ghule05@gmail.com',
+    // to: email,
+    // subject: 'Password Reset OTP',
+    // text: `Your OTP is ${otp}. It will expire in 5 minutes.`,
+     from: process.env.EMAIL_USER,
+  to: email,
+  subject: 'Password Reset OTP',
+  text: `Your OTP is ${otp}. It will expire in 5 minutes.`,
   };
 
   try {
     await transporter.sendMail(mailOptions);
     res.status(200).json({ message: "OTP sent to email" });
   } catch (error) {
+    console.error("OTP send error:", error);
     res.status(500).json({ message: "Failed to send OTP", error });
   }
 };
