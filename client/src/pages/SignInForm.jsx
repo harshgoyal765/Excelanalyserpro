@@ -1,53 +1,58 @@
 import React, { useState } from "react";
 import SignupForm from "./SignupForm";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from '../services/api';
+import { ClipLoader } from "react-spinners";
+import { loginUser } from "../services/api";
+
 const SignInForm = () => {
   const [formType, setFormType] = useState("signin");
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
-   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    
   };
-  
-    const handleSubmit = async (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
+
     try {
-       const res = await loginUser({ email: formData.email, password: formData.password });
+      const res = await loginUser({
+        email: formData.email,
+        password: formData.password,
+      });
 
       const { token, role, user } = res.data;
 
-       localStorage.setItem("authToken", token);
-      localStorage.setItem("userRole", role); 
-       localStorage.setItem('firstName', user.firstName);  
-       localStorage.setItem('lastName', user.lastName);  
-    localStorage.setItem('userEmail', user.email);  
+      localStorage.setItem("authToken", token);
+      localStorage.setItem("userRole", role);
+      localStorage.setItem("firstName", user.firstName);
+      localStorage.setItem("lastName", user.lastName);
+      localStorage.setItem("userEmail", user.email);
 
       window.dispatchEvent(new Event("authChanged"));
       alert("Login successful!");
+      setLoading(false);
+
       if (role === "admin") {
-      navigate("/admin/dashboard");
-    } else if (role === "user") {
-      setTimeout(() => {
-  navigate("/user-dashboard");
-  window.location.reload(); 
-  navigate(0); 
-}, 100);
-    } else {
-      setError("Unknown role. Contact administrator.");
-    }
+        navigate("/admin/dashboard");
+      } else if (role === "user") {
+        navigate("/user-dashboard");
+      } else {
+        setError("Unknown role. Contact administrator.");
+      }
     } catch (err) {
-      console.error(err);
+      setLoading(false);
       setError("Invalid email or password");
     }
   };
 
- return (
-    <div className="bg-gradient-to-b from-blue-50 to-white pt-20 min-h-screen flex justify-center items-center p-8  ">
+  return (
+    <div className="bg-gradient-to-b from-blue-50 to-white pt-20 min-h-screen flex justify-center items-center p-8">
       <div className="bg-white border border-black rounded-xl p-6 w-full max-w-md shadow-lg shadow-gray-800">
         <div className="text-center mb-4">
           <h2 className="text-2xl font-semibold">
@@ -99,20 +104,21 @@ const SignInForm = () => {
               className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {error && <p className="text-red-500 text-sm">{error}</p>}
-           <button
+            <button
               type="submit"
-              className="mt-4 bg-gradient-to-r from-[#030d46] to-[#06eaea] text-white py-2 rounded-full hover:opacity-90 transition"
+              className="mt-4 bg-gradient-to-r from-[#030d46] to-[#06eaea] text-white py-2 rounded-full hover:opacity-90 transition flex justify-center items-center"
+              disabled={loading}
             >
-              Sign In
+              {loading ? <ClipLoader size={24} color="#fff" /> : "Sign In"}
             </button>
             <a
               href="/ForgetPwd"
-              className="text-blue-700 font-medium m-0.5 hover:underline hover:text-red-600 text-sm ml-70 "
+              className="text-blue-700 font-medium m-0.5 hover:underline hover:text-red-600 text-sm ml-auto"
             >
               Forget Password ?
             </a>
             <div className="flex items-center my-2">
-              <hr className="flex-grow border-t  border-gray-300" />
+              <hr className="flex-grow border-t border-gray-300" />
               <span className="mx-4 text-gray-500 font-medium">OR</span>
               <hr className="flex-grow border-t border-gray-300" />
             </div>
