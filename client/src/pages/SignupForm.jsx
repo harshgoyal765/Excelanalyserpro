@@ -116,8 +116,155 @@ const SignupForm = () => {
     >
       <h3 className="text-xl font-semibold mb-4">Signup</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* All inputs remain same as your original code */}
-        {/* ... */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            First Name <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            name="firstName"
+            className="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-300"
+            value={formData.firstName}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Last Name <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            name="lastName"
+            className="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 "
+            value={formData.lastName}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="col-span-1 md:col-span-2">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Username <span className="text-red-500">*</span>
+          </label>
+          <div className="flex items-center">
+            <span className="px-3 py-2 bg-gray-100 border border-gray-300 rounded-l text-gray-500">
+              @
+            </span>
+            <input
+              type="text"
+              name="username"
+              className="w-full border border-gray-300 px-3 py-2 rounded-r focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={formData.username}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        </div>
+
+        <div className="col-span-1 md:col-span-2">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Email <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="email"
+            name="email"
+            className="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="you@example.com"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="col-span-1 md:col-span-2">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Password <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="password"
+            name="password"
+            className="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+            minLength={8}
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Country <span className="text-red-500">*</span>
+          </label>
+          <select
+            name="country"
+            className="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={formData.country}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Choose...</option>
+            <option value="India">India</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            State <span className="text-red-500">*</span>
+          </label>
+          <select
+            name="state"
+            className="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={formData.state}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Choose...</option>
+            {indianStates.map((state) => (
+              <option key={state} value={state}>
+                {state}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            City<span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            name="city"
+            className="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-300"
+            value={formData.city}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Pincode <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            name="pincode"
+            inputMode="numeric" 
+            pattern="[0-9]*" 
+            maxLength={6} 
+            className="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={formData.pincode}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (/^\d*$/.test(value)) {
+                setFormData({ ...formData, pincode: value });
+              }
+            }}
+            required
+          />
+        </div>
       </div>
 
       <button
