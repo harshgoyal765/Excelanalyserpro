@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
+import { registerUser } from "../services/api";
 
-import { registerUser } from '../services/api';
 const SignupForm = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false); // ✅ loading state
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -27,6 +29,7 @@ const SignupForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true); // start loading
 
     try {
       const response = await registerUser(formData);
@@ -46,7 +49,7 @@ const SignupForm = () => {
       });
 
       if (response.status === 201) {
-        alert("Signup successful! go to Signin...");
+        alert("Signup successful! Go to Signin...");
         navigate("/sign-in");
       } else {
         setError("Unexpected response from server.");
@@ -62,6 +65,8 @@ const SignupForm = () => {
       } else {
         setError("Registration failed. Please try again.");
       }
+    } finally {
+      setLoading(false); // stop loading
     }
   };
 
@@ -264,9 +269,10 @@ const SignupForm = () => {
 
       <button
         type="submit"
-        className="mt-6 w-full bg-gradient-to-r from-[#030d46] to-[#06eaea] text-white py-2 px-4  hover:opacity-50 transition duration-300 rounded-2xl"
+        disabled={loading} // disable during loading
+        className="mt-6 w-full bg-gradient-to-r from-[#030d46] to-[#06eaea] text-white py-2 px-4 hover:opacity-50 transition duration-300 rounded-2xl flex justify-center items-center"
       >
-        Sign Up
+        {loading ? <ClipLoader size={24} color="#fff" /> : "Sign Up"}
       </button>
       {error && <div className="text-red-600 font-medium mt-2">{error}</div>}
     </form>

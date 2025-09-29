@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
 import { sendOtp, verifyOtp, resetPassword } from "../services/api";
 
 const ForgetPassword = () => {
@@ -13,6 +14,7 @@ const ForgetPassword = () => {
   const [otpSent, setOtpSent] = useState(false);
   const [otpVerified, setOtpVerified] = useState(false);
   const [otpInput, setOtpInput] = useState("");
+  const [loading, setLoading] = useState(false); // ✅ Loading state
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -28,27 +30,34 @@ const ForgetPassword = () => {
       alert("Please enter your email first.");
       return;
     }
-
+    setLoading(true);
     try {
       await sendOtp(formData.email);
-      console.log("OTP sent to:", formData.email);
       setOtpSent(true);
       alert("OTP sent to your email successfully!");
     } catch (error) {
       console.error("Failed to send OTP:", error);
       alert("Failed to send OTP. Try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleVerifyOtp = async () => {
+    if (!otpInput) {
+      alert("Please enter the OTP.");
+      return;
+    }
+    setLoading(true);
     try {
-      const response = await verifyOtp(formData.email, otpInput);
-      console.log(response.data.message);
+      await verifyOtp(formData.email, otpInput);
       setOtpVerified(true);
       alert("OTP Verified!");
     } catch (error) {
       console.error("OTP verification failed:", error);
       alert("Invalid OTP. Try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -70,14 +79,16 @@ const ForgetPassword = () => {
       return;
     }
 
+    setLoading(true);
     try {
-      const response = await resetPassword(formData.email, formData.newPwd);
-      console.log("Password reset response:", response.data);
+      await resetPassword(formData.email, formData.newPwd);
       alert("Password has been reset successfully!");
       navigate("/sign-in");
     } catch (error) {
       console.error("Password reset failed:", error);
       alert("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -89,7 +100,6 @@ const ForgetPassword = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Registered Email <span className="text-red-500">*</span>
           </label>
@@ -102,14 +112,14 @@ const ForgetPassword = () => {
             required
           />
 
-        
           {!otpSent ? (
             <button
               type="button"
               onClick={handleSendOtp}
-              className="mt-6 w-full bg-gradient-to-r from-[#030d46] to-[#06eaea] text-white py-2 px-4 hover:opacity-50 transition duration-300 rounded-2xl"
+              disabled={loading} // disabled while loading
+              className="mt-6 w-full bg-gradient-to-r from-[#030d46] to-[#06eaea] text-white py-2 px-4 hover:opacity-50 transition duration-300 rounded-2xl flex justify-center items-center"
             >
-              Send OTP
+              {loading ? <ClipLoader size={24} color="#fff" /> : "Send OTP"}
             </button>
           ) : (
             <p className="text-green-600 text-sm">OTP sent to your email.</p>
@@ -130,14 +140,14 @@ const ForgetPassword = () => {
               <button
                 type="button"
                 onClick={handleVerifyOtp}
-                className="mt-6 w-full bg-gradient-to-r from-[#030d46] to-[#06eaea] text-white py-2 px-4 hover:opacity-50 transition duration-300 rounded-2xl"
+                disabled={loading} // disabled while loading
+                className="mt-6 w-full bg-gradient-to-r from-[#030d46] to-[#06eaea] text-white py-2 px-4 hover:opacity-50 transition duration-300 rounded-2xl flex justify-center items-center"
               >
-                Verify OTP
+                {loading ? <ClipLoader size={24} color="#fff" /> : "Verify OTP"}
               </button>
             </>
           )}
 
-    
           {otpVerified && (
             <>
               <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -168,9 +178,10 @@ const ForgetPassword = () => {
 
               <button
                 type="submit"
-                className="mt-6 w-full bg-gradient-to-r from-[#030d46] to-[#06eaea] text-white py-2 px-4 hover:opacity-50 transition duration-300 rounded-2xl"
+                disabled={loading} // disabled while loading
+                className="mt-6 w-full bg-gradient-to-r from-[#030d46] to-[#06eaea] text-white py-2 px-4 hover:opacity-50 transition duration-300 rounded-2xl flex justify-center items-center"
               >
-                Set Password
+                {loading ? <ClipLoader size={24} color="#fff" /> : "Set Password"}
               </button>
             </>
           )}
